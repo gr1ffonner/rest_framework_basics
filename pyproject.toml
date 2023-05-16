@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "drf-basic"
+version = "0.1.0"
+description = ""
+authors = ["Danya <danya.rodnyakov228@gmail.com>"]
+readme = "README.md"
+packages = [{include = "drf_basic"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+djangorestframework = "^3.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,19 @@
+# Python
+*.pyc
+
+# Poetry
+.poetry/
+poetry.lock
+
+# Django
+*.log
+db.sqlite3
+media/
+
+# Development
+
+# Other
+__pycache__/
+*.swp
+*.swo
+.DS_Store
