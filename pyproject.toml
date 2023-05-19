@@ -9,6 +9,7 @@ packages = [{include = "drf_basic"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 djangorestframework = "^3.14.0"
+django-stubs = "^4.2.0"
 
 
 [build-system]

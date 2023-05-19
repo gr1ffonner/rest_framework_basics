@@ -8,11 +8,10 @@ class User(AbstractUser):
         ("employee", "Employee"),
     )
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    name = models.CharField(max_length=50)
-    password = models.CharField(max_length=100)
+    username = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return self.name
+        return self.username
 
 
 class Task(models.Model):
