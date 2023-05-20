@@ -1,17 +1,15 @@
 from django.urls import path
+from rest_framework.routers import SimpleRouter
 from .views import (
-    MessageDetailView,
-    MessageListCreateView,
-    TaskDetailView,
-    TaskListCreateView,
+    UserViewSet,
+    MessageViewSet,
+    TaskViewSet,
 )
 
-urlpatterns = [
-    # message's urls
-    path("messages/<int:pk>/", MessageDetailView.as_view()),
-    path("messages/", MessageListCreateView.as_view()),
-    # task's urls
-    path("tasks/<int:pk>/", TaskDetailView.as_view()),
-    path("tasks/", TaskListCreateView.as_view())
-    # users's urls
-]
+router = SimpleRouter()
+
+
+router.register(r"users", UserViewSet, basename="users")
+router.register("tasks", TaskViewSet, basename="tasks")
+router.register("messages", MessageViewSet, basename="messages")
+urlpatterns = router.urls
