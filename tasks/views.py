@@ -1,6 +1,17 @@
 from .models import Task, Message, User
+from dj_rest_auth.registration.views import RegisterView
 from rest_framework import generics, permissions, viewsets
-from .serializers import TaskSerializer, MessageSerializer, UserSerializer
+from .serializers import (
+    TaskSerializer,
+    MessageSerializer,
+    UserSerializer,
+    CustomRegisterSerializer,
+)
+
+
+class CustomRegisterView(RegisterView):
+    serializer_class = CustomRegisterSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class UserViewSet(viewsets.ModelViewSet):
