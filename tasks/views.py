@@ -1,17 +1,17 @@
 from .models import Task, Message, User
 from dj_rest_auth.registration.views import RegisterView
-from rest_framework import generics, permissions, viewsets
+from rest_framework import permissions, viewsets
 from .serializers import (
     TaskSerializer,
     MessageSerializer,
     UserSerializer,
     CustomRegisterSerializer,
 )
+from .permissions import IsManager
 
 
 class CustomRegisterView(RegisterView):
     serializer_class = CustomRegisterSerializer
-    permission_classes = (permissions.IsAuthenticated,)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -24,11 +24,16 @@ class UserViewSet(viewsets.ModelViewSet):
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+    permission_classes = (IsManager,)
 
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = (
+        IsManager,
+        permissions.IsAdminUser,
+    )
 
     def perform_create(self, serializer):
         assigned_to_username = self.request.data.get("assigned_to")
