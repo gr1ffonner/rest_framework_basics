@@ -72,8 +72,12 @@ class TaskSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer()
+    created_by = UserSerializer(read_only=True)
 
     class Meta:
         model = Message
         fields = ["id", "content", "created_by", "created_at"]
+
+    def create(self, validated_data):
+        validated_data["created_by"] = self.context["request"].user
+        return super().create(validated_data)
