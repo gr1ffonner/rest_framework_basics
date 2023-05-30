@@ -9,6 +9,8 @@ from .serializers import (
 )
 from .permissions import IsManager
 
+UNSAFE_METHODS = ["create", "destroy"]
+
 
 class CustomRegisterView(RegisterView):
     serializer_class = CustomRegisterSerializer
@@ -24,16 +26,25 @@ class UserViewSet(viewsets.ModelViewSet):
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    permission_classes = (IsManager,)
+
+    def get_permissions(self):
+        if self.action == UNSAFE_METHODS:
+            permission_classes = [IsManager, permissions.IsAdminUser]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = (
-        IsManager,
-        permissions.IsAdminUser,
-    )
+
+    def get_permissions(self):
+        if self.action in UNSAFE_METHODS:
+            permission_classes = [IsManager, permissions.IsAdminUser]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
         assigned_to_username = self.request.data.get("assigned_to")
