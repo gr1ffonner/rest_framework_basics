@@ -1,6 +1,6 @@
 from rest_framework import permissions
 
-UNSAFE_METHODS = ["POST", "DELETE"]
+UNSAFE_METHODS = ["POST", "DELETE", "PUT"]
 
 
 class IsManagerOrReadOnly(permissions.BasePermission):
