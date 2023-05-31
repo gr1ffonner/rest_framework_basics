@@ -46,8 +46,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class TaskSerializer(serializers.ModelSerializer):
     assigned_to = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", write_only=True
+        queryset=User.objects.filter(role="employee"),
+        slug_field="username",
+        write_only=True,
     )
+    completed = serializers.BooleanField(read_only=False)
 
     class Meta:
         model = Task
@@ -66,14 +69,16 @@ class TaskSerializer(serializers.ModelSerializer):
         assigned_to = instance.assigned_to
         if assigned_to:
             data["assigned_to"] = UserSerializer(assigned_to).data
-            if "role" in data["assigned_to"]:
-                del data["assigned_to"]["role"]
         return data
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    created_by = UserSerializer()
+    created_by = UserSerializer(read_only=True)
 
     class Meta:
         model = Message
         fields = ["id", "content", "created_by", "created_at"]
+
+    def create(self, validated_data):
+        validated_data["created_by"] = self.context["request"].user
+        return super().create(validated_data)
