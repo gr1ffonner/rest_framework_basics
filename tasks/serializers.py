@@ -46,8 +46,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class TaskSerializer(serializers.ModelSerializer):
     assigned_to = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", write_only=True
+        queryset=User.objects.filter(role="employee"),
+        slug_field="username",
+        write_only=True,
     )
+    completed = serializers.BooleanField(read_only=False)
 
     class Meta:
         model = Task
@@ -66,8 +69,6 @@ class TaskSerializer(serializers.ModelSerializer):
         assigned_to = instance.assigned_to
         if assigned_to:
             data["assigned_to"] = UserSerializer(assigned_to).data
-            if "role" in data["assigned_to"]:
-                del data["assigned_to"]["role"]
         return data
 
 
