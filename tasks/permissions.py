@@ -1,11 +1,13 @@
 from rest_framework import permissions
 
-UNSAFE_METHODS = ["POST", "DELETE", "PUT"]
-
 
 class IsManagerOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.method in UNSAFE_METHODS and request.user.role == "manager":
-            return True
+        if request.method in permissions.SAFE_METHODS:
+            return True  # Allow GET, HEAD, OPTIONS requests for all authenticated users
+        elif request.user.is_authenticated:
+            return (
+                request.user.role == "manager"
+            )  # Only users with role "manager" can perform unsafe methods
         else:
-            return False
+            return False  # Deny all other requests
