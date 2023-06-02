@@ -1,13 +1,12 @@
 [tool.poetry]
-name = "drf-basic"
+name = "rest_framework_basics"
 version = "0.1.0"
 description = ""
 authors = ["Danya <danya.rodnyakov228@gmail.com>"]
 readme = "README.md"
-packages = [{include = "drf_basic"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 djangorestframework = "^3.14.0"
 django-stubs = "^4.2.0"
 
@@ -19,6 +18,7 @@ django-allauth = "^0.54.0"
 drf-yasg = "^1.21.5"
 pyyaml = "^6.0"
 uritemplate = "^4.1.1"
+psycopg2-binary = "^2.9.6"
 
 
 [build-system]

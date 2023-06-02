@@ -14,7 +14,7 @@ SECRET_KEY = "django-insecure-^ztx2n+)q)_%!2#(awki4t4o9^-dxl+=%(fq=z3_cdzl&z^=@x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -75,8 +75,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "tasks_db",
+        "USER": "danya",
+        "PASSWORD": "admin",
+        "HOST": "db",  # This corresponds to the Docker service name in the docker-compose.yml file
+        "PORT": "5432",  # PostgreSQL default port
     }
 }
 
@@ -115,7 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
