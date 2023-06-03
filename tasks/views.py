@@ -12,10 +12,14 @@ from .permissions import IsManagerOrReadOnly, IsEmployeeOrReadOnly
 
 
 class CustomRegisterView(RegisterView):
+    """Регистрация пользователя с выбором роли (кроме админа)"""
+
     serializer_class = CustomRegisterSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """Список пользователей"""
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = "username"
@@ -23,6 +27,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class MessageViewSet(viewsets.ModelViewSet):
+    """Сообщения"""
+
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = [IsManagerOrReadOnly | permissions.IsAdminUser]
@@ -32,6 +38,8 @@ class MessageViewSet(viewsets.ModelViewSet):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
+    """Таски"""
+
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     permission_classes = [
