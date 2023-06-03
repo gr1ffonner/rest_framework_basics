@@ -9,12 +9,12 @@ from dj_rest_auth.registration.views import VerifyEmailView
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Blog API",
+        title="TASKS API",
         default_version="v1",
-        description="A sample API for learning DRF",
+        description="A sample API for task and message management",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="hello@example.com"),
-        license=openapi.License(name="BSD License"),
+        contact=openapi.Contact(email="privetpoka@example.com"),
+        license=openapi.License(name="Danya License"),
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
